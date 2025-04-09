@@ -9,89 +9,115 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import Controller.Conexion;
+import View.Interfaz;
 
 public class Promotores {
 
-	public int idpromotores =0;
+	Interfaz interfaz = new Interfaz();
+
+	public int idpromotores = 0;
 	public String tipoidentificacion = "";
-	public String ndocumento ="";
-	public String nombre ="";
-	public String apellido ="";
-	public String dirección ="";
-	public String correopersonal ="";
-	public String correocorporativo ="";
-	public String fechanacimiento ="";
-	public int telefono =0;
-	public int codigo =0;
+	public String ndocumento = "";
+	public String nombre = "";
+	public String apellido = "";
+	public String dirección = "";
+	public String correopersonal = "";
+	public String correocorporativo = "";
+	public String fechanacimiento = "";
+	public int telefono = 0;
+	public int codigo = 0;
 	Conexion conector = new Conexion();
+
 	public int getIdpromotores() {
 		return idpromotores;
 	}
+
 	public void setIdpromotores(int idpromotores) {
 		this.idpromotores = idpromotores;
 	}
+
 	public String getTipoidentificacion() {
 		return tipoidentificacion;
 	}
+
 	public void setTipoidentificacion(String tipoidentificacion) {
 		this.tipoidentificacion = tipoidentificacion;
 	}
+
 	public String getNdocumento() {
 		return ndocumento;
 	}
+
 	public void setNdocumento(String ndocumento) {
 		this.ndocumento = ndocumento;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public String getApellido() {
 		return apellido;
 	}
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+
 	public String getDirección() {
 		return dirección;
 	}
+
 	public void setDirección(String dirección) {
 		this.dirección = dirección;
 	}
+
 	public String getCorreopersonal() {
 		return correopersonal;
 	}
+
 	public void setCorreopersonal(String correopersonal) {
 		this.correopersonal = correopersonal;
 	}
+
 	public String getCorreocorporativo() {
 		return correocorporativo;
 	}
+
 	public void setCorreocorporativo(String correocorporativo) {
 		this.correocorporativo = correocorporativo;
 	}
+
 	public String getFechanacimiento() {
 		return fechanacimiento;
 	}
+
 	public void setFechanacimiento(String fechanacimiento) {
 		this.fechanacimiento = fechanacimiento;
 	}
+
 	public int getTelefono() {
 		return telefono;
 	}
+
 	public void setTelefono(int telefono) {
 		this.telefono = telefono;
 	}
+
 	public int getCodigo() {
 		return codigo;
 	}
+
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-	public void create( String tipoidentificacion, String ndocumento, String nombre, String apellido, String direción, String correopersonal,
-			String correocorporativo, String fechanacimiento, String telefono ,String codigo) {
+
+	public void create(String tipoidentificacion, String ndocumento, String nombre, String apellido, String direción,
+			String correopersonal, String correocorporativo, String fechanacimiento, String telefono, String codigo) {
 
 		Conexion conector = new Conexion();
 
@@ -125,7 +151,7 @@ public class Promotores {
 		}
 
 	}
-		
+
 	public void delete(int idpromotores) {
 		Connection dbConnection = null;
 		PreparedStatement pst = null;
@@ -148,10 +174,10 @@ public class Promotores {
 			System.out.println(e.getMessage());
 		}
 	}
+
 	public void readOne(int idpromotores, JTextField tipoidentificacion, JTextField ndocumento, JTextField nombre,
-			JTextField apellido, JTextField dirección, JTextField correopersonal,
-			JTextField correocorporativo, JTextField fechanacimiento, JTextField telefono,
-			JTextField codigo) {
+			JTextField apellido, JTextField dirección, JTextField correopersonal, JTextField correocorporativo,
+			JTextField fechanacimiento, JTextField telefono, JTextField codigo) {
 
 		Connection bdConnection = null;
 		PreparedStatement pst = null;
@@ -163,8 +189,8 @@ public class Promotores {
 
 			pst.setInt(1, idpromotores);
 			ResultSet rs = pst.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				tipoidentificacion.setText(rs.getString(2));
 				ndocumento.setText(rs.getString(3));
 				nombre.setText(rs.getString(4));
@@ -175,7 +201,7 @@ public class Promotores {
 				fechanacimiento.setText(rs.getString(9));
 				telefono.setText(rs.getString(10));
 				codigo.setText(rs.getString(11));
-			
+
 			}
 
 		} catch (Exception e) {
@@ -183,6 +209,27 @@ public class Promotores {
 
 		}
 	}
+
+	public void ControlAcesso(String usuario, String password) {
+
+		Connection bdConnection = null;
+		PreparedStatement pst = null;
+		String script = "SELECT * FROM tblpromotores WHERE ndocumento = ? and contrasena";
+
+		try {
+			bdConnection = conector.conectarBD();
+			pst = bdConnection.prepareStatement(script);
+
+			pst.setString(1, usuario);
+			pst.setString(2, password);
+			ResultSet rs = pst.executeQuery();
+
+			while (rs.next()) {
+				interfaz.show();
+
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
-
-
