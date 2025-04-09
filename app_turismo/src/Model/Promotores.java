@@ -2,9 +2,11 @@ package Model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import Controller.Conexion;
 
@@ -21,6 +23,7 @@ public class Promotores {
 	public String fechanacimiento ="";
 	public int telefono =0;
 	public int codigo =0;
+	Conexion conector = new Conexion();
 	public int getIdpromotores() {
 		return idpromotores;
 	}
@@ -123,5 +126,63 @@ public class Promotores {
 
 	}
 		
+	public void delete(int idpromotores) {
+		Connection dbConnection = null;
+		PreparedStatement pst = null;
+		String script = "DELETE FROM tblpromotores WHERE idpromotores = ?";
+
+		try {
+			dbConnection = conector.conectarBD();
+			pst = dbConnection.prepareStatement(script);
+
+			pst.setInt(1, idpromotores);
+
+			int resp = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el registro No. " + idpromotores + "?");
+
+			if (resp == JOptionPane.OK_OPTION) {
+				pst.executeUpdate();
+				JOptionPane.showConfirmDialog(null, "Registro No. " + idpromotores + "Eliminado");
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
+	public void readOne(int idpromotores, JTextField tipoidentificacion, JTextField ndocumento, JTextField nombre,
+			JTextField apellido, JTextField dirección, JTextField correopersonal,
+			JTextField correocorporativo, JTextField fechanacimiento, JTextField telefono,
+			JTextField codigo) {
+
+		Connection bdConnection = null;
+		PreparedStatement pst = null;
+		String script = "SELECT * FROM tblpromotores WHERE idpromotores = ?";
+
+		try {
+			bdConnection = conector.conectarBD();
+			pst = bdConnection.prepareStatement(script);
+
+			pst.setInt(1, idpromotores);
+			ResultSet rs = pst.executeQuery();
+			
+			while(rs.next()) {
+				tipoidentificacion.setText(rs.getString(2));
+				ndocumento.setText(rs.getString(3));
+				nombre.setText(rs.getString(4));
+				apellido.setText(rs.getString(5));
+				dirección.setText(rs.getString(6));
+				correopersonal.setText(rs.getString(7));
+				correocorporativo.setText(rs.getString(8));
+				fechanacimiento.setText(rs.getString(9));
+				telefono.setText(rs.getString(10));
+				codigo.setText(rs.getString(11));
+			
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		}
+	}
+}
+
 

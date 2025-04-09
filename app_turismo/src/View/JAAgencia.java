@@ -14,6 +14,10 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.Color;
 
 public class JAAgencia extends JFrame {
 
@@ -32,6 +36,8 @@ public class JAAgencia extends JFrame {
 	private JLabel lblid_compañia;
 	private JTextField textid_compañia;
 	Agencia cr = new Agencia();
+	private JTextField textid_agencia;
+	private JButton btnconsult;
 
 	/**
 	 * Launch the application.
@@ -54,7 +60,7 @@ public class JAAgencia extends JFrame {
 	 */
 	public JAAgencia() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 348);
+		setBounds(100, 100, 297, 380);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -62,83 +68,126 @@ public class JAAgencia extends JFrame {
 		contentPane.setLayout(null);
 
 		lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(90, 68, 46, 14);
+		lblNombre.setBounds(37, 78, 46, 14);
 		contentPane.add(lblNombre);
 
 		lblDirección = new JLabel("Dirección");
-		lblDirección.setBounds(90, 93, 46, 14);
+		lblDirección.setBounds(37, 114, 46, 14);
 		contentPane.add(lblDirección);
 
 		lblTelefono = new JLabel("Telefono");
-		lblTelefono.setBounds(90, 153, 46, 14);
+		lblTelefono.setBounds(37, 185, 46, 14);
 		contentPane.add(lblTelefono);
 
 		lblWeb = new JLabel("Web");
-		lblWeb.setBounds(90, 187, 46, 14);
+		lblWeb.setBounds(37, 221, 46, 14);
 		contentPane.add(lblWeb);
 
 		textnombre = new JTextField();
-		textnombre.setBounds(177, 65, 86, 20);
+		textnombre.setBounds(37, 93, 86, 20);
 		contentPane.add(textnombre);
 		textnombre.setColumns(10);
 
 		textdireccion = new JTextField();
-		textdireccion.setBounds(177, 90, 86, 20);
+		textdireccion.setBounds(37, 130, 86, 20);
 		contentPane.add(textdireccion);
 		textdireccion.setColumns(10);
 
 		textcorreoelectronico = new JTextField();
-		textcorreoelectronico.setBounds(177, 115, 86, 20);
+		textcorreoelectronico.setBounds(37, 165, 86, 20);
 		contentPane.add(textcorreoelectronico);
 		textcorreoelectronico.setColumns(10);
 
 		texttelefono = new JTextField();
-		texttelefono.setBounds(177, 150, 86, 20);
+		texttelefono.setBounds(37, 199, 86, 20);
 		contentPane.add(texttelefono);
 		texttelefono.setColumns(10);
 
 		textweb = new JTextField();
-		textweb.setBounds(177, 184, 86, 20);
+		textweb.setBounds(37, 239, 86, 20);
 		contentPane.add(textweb);
 		textweb.setColumns(10);
 
 
 		JLabel lblCorreoelectronico = new JLabel("Correo Electronico");
-		lblCorreoelectronico.setBounds(90, 118, 46, 14);
+		lblCorreoelectronico.setBounds(37, 149, 105, 14);
 		contentPane.add(lblCorreoelectronico);
 		
 		lblNewLabel = new JLabel("GESTIÓN AGENCIA");
-		lblNewLabel.setBounds(151, 26, 112, 14);
+		lblNewLabel.setBounds(93, 34, 112, 14);
 		contentPane.add(lblNewLabel);
 		
 		JButton btnguardar = new JButton("GUARDAR");
+		btnguardar.setForeground(new Color(0, 0, 0));
+		btnguardar.setBounds(47, 307, 89, 23);
 		btnguardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				 cr.create(textnombre.getText(),textdireccion.getText(),textcorreoelectronico.getText(),texttelefono.getText(),textweb.getText(),textid_compañia.getText());
+				 cr.create(textnombre.getText(),textdireccion.getText(),textcorreoelectronico.getText(),texttelefono.getText(),textweb.getText(),textid_compañia.getText(),textid_agencia.getText());
 						
 			}
 		});
-		btnguardar.setBounds(174, 257, 89, 23);
 		contentPane.add(btnguardar);
 		
 		lblid_compañia = new JLabel("Id Compañia");
-		lblid_compañia.setBounds(90, 212, 46, 14);
+		lblid_compañia.setBounds(37, 259, 67, 20);
 		contentPane.add(lblid_compañia);
 		
 		textid_compañia = new JTextField();
-		textid_compañia.setBounds(177, 209, 86, 20);
+		textid_compañia.setBounds(37, 276, 86, 20);
 		contentPane.add(textid_compañia);
 		textid_compañia.setColumns(10);
 		
 		JButton btndelete = new JButton("");
+		btndelete.setFont(new Font("Tahoma", Font.PLAIN, 5));
+		btndelete.setBounds(207, 142, 46, 57);
 		btndelete.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				cr.delete(Integer.parseInt(textid_agencia.getText()));
 			}
 		});
 		btndelete.setIcon(new ImageIcon("C:\\Users\\APRENDIZ\\Downloads\\3030705_bin_delete_trash_unused_icon.png"));
-		btndelete.setBounds(314, 68, 61, 57);
 		contentPane.add(btndelete);
+		
+		JLabel lblid_agencia = new JLabel("Id Agencia :");
+		lblid_agencia.setBounds(153, 96, 67, 14);
+		contentPane.add(lblid_agencia);
+		
+		textid_agencia = new JTextField();
+		textid_agencia.setBounds(153, 111, 86, 20);
+		contentPane.add(textid_agencia);
+		textid_agencia.setColumns(10);
+		
+		btnconsult = new JButton("");
+		btnconsult.setBounds(159, 148, 46, 51);
+		btnconsult.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cr.readOne(Integer.parseInt(textid_agencia.getText()),textnombre,textdireccion,textcorreoelectronico,texttelefono,textweb,textid_compañia);
+			}
+		});
+		btnconsult.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnconsult.setIcon(new ImageIcon("C:\\Users\\APRENDIZ\\Downloads\\10186532_search_seo_glass_magnifying glass_magnifying_icon.png"));
+		contentPane.add(btnconsult);
+		
+		JButton btnupdate = new JButton("");
+		btnupdate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cr.Update(Integer.parseInt(textid_agencia.getText()),textnombre.getText(),textdireccion.getText(),textcorreoelectronico.getText(),texttelefono.getText(),textweb.getText(),textid_compañia.getText());
+			}
+		});
+		btnupdate.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		btnupdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnupdate.setIcon(new ImageIcon("C:\\Users\\APRENDIZ\\Downloads\\430112_refresh_icon.png"));
+		btnupdate.setBounds(217, 289, 54, 41);
+		contentPane.add(btnupdate);
 	}
 }
